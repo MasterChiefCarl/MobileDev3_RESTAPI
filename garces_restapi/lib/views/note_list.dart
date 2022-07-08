@@ -1,47 +1,30 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:garces_restapi/models/notes_model.dart';
+import 'package:garces_restapi/service/notes_service.dart';
 import 'package:garces_restapi/views/note_createmodify.dart';
 import 'package:garces_restapi/views/note_delete.dart';
+import 'package:get_it/get_it.dart';
 
 // ignore: use_key_in_widget_constructors
-class NoteList extends StatelessWidget {
-  //hardcoded list of notes
+class NoteList extends StatefulWidget {
 
-  final notes = [
-    NoteForListing(
-        noteID: "1",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 1'),
-    NoteForListing(
-        noteID: "2",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 2'),
-    NoteForListing(
-        noteID: "3",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 3'),
-    NoteForListing(
-        noteID: "4",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 4'),
-    NoteForListing(
-        noteID: "5",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 5'),
-    NoteForListing(
-        noteID: "6",
-        createDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 6'),
-  ];
+  @override
+  State<NoteList> createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
+  NotesService get service => GetIt.I<NotesService>();
+  List<NoteForListing> notes =[];
 
   String formatDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+  @override
+  void initState(){
+    notes = service.getNotesList();
+    super.initState();
   }
 
   @override
