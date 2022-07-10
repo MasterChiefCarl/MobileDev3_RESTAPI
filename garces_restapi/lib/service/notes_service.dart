@@ -18,8 +18,8 @@ class NotesService {
   };
 
   Future<APIResponse<List<NoteForListing>>> getNotesList() async {
-    final ur
-    return await http.get('$API/notes', headers: headers).then((data) {
+    
+    return await http.get(Uri.parse('$API/notes'), headers: headers).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final notes = <NoteForListing>[];
@@ -37,8 +37,8 @@ class NotesService {
         return APIResponse<List<NoteForListing>>(data: notes);
       }
       return APIResponse<List<NoteForListing>>(
-          data: [], error: true, errorMessage: 'an Error occurred');
+          data: [], error: true, errorMessage: 'An Error occurred');
     }).catchError((_) => APIResponse<List<NoteForListing>>(
-        data: [], error: true, errorMessage: 'an Error occurred'));
+        data: [], error: true, errorMessage: 'An Error occurred'));
   }
 }
